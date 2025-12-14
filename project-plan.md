@@ -1303,51 +1303,86 @@ FileSize::kilobytes(2048)
 
 ### Phase 1: Project Setup
 
-- [ ] Set up directory structure
-- [ ] Initialize composer.json with dependencies
-- [ ] Configure Laravel Pint (pint.json)
-- [ ] Configure Larastan (phpstan.neon)
-- [ ] Configure Rector (rector.php)
-- [ ] Configure PHPUnit (phpunit.xml)
-- [ ] Set up GitHub Actions workflows
-- [ ] Create .gitignore and .gitattributes
-- [ ] Add MIT license file
+- [x] Set up directory structure
+- [x] Initialize composer.json with dependencies
+- [x] Configure Laravel Pint (pint.json)
+- [x] Configure Larastan (phpstan.neon)
+- [x] Configure Rector (rector.php)
+- [x] Configure PHPUnit (phpunit.xml)
+- [x] Set up GitHub Actions workflows
+- [x] Create .gitignore and .gitattributes
+- [x] Add MIT license file
+
+**Phase 1 Summary:**
+Project setup is complete. All configuration files are in place and working:
+- `composer.json` configured with all dependencies including `driftingly/rector-laravel`
+- `phpstan.neon` configured for level 7 analysis (removed deprecated options `checkMissingIterableValueType` and `checkGenericClassInNonGenericObjectType`)
+- `phpunit.xml` configured with Unit/Feature test suites and coverage settings
+- `tests/TestCase.php` and `tests/Pest.php` created for Pest/Laravel testing
+- `LICENSE.md` added with MIT license
+- GitHub Actions workflow configured for tests, code style, static analysis, and rector
+
+Key findings: The default byte base is set to Decimal (1000-based) which affects test expectations.
 
 ### Phase 2: Core Development
 
-- [ ] Create ByteBase enum
-- [ ] Create Unit enum with conversion methods
-- [ ] Create custom exceptions
-    - [ ] InvalidUnitException
-    - [ ] InvalidValueException
-    - [ ] NegativeValueException
-- [ ] Implement main FileSize class
-    - [ ] Constructor and static factories
-    - [ ] Magic __get for property access
-    - [ ] Precision and ByteBase fluent setters
-- [ ] Create HandlesConversions trait
-    - [ ] toBytes(), toKilobytes(), toMegabytes(), etc.
-- [ ] Create HandlesArithmetic trait
-    - [ ] add(), sub(), multiply(), divide()
-    - [ ] Convenience methods (addKilobytes, subMegabytes, etc.)
-    - [ ] abs() method
-- [ ] Create HandlesComparisons trait
-    - [ ] equals(), notEquals()
-    - [ ] greaterThan(), greaterThanOrEqual()
-    - [ ] lessThan(), lessThanOrEqual()
-    - [ ] between(), min(), max()
-    - [ ] isZero(), isPositive(), isNegative()
-- [ ] Create HandlesFormatting trait
-    - [ ] forHumans() with short option
-    - [ ] format() and formatShort() aliases
-    - [ ] bestUnit() helper
+- [x] Create ByteBase enum
+- [x] Create Unit enum with conversion methods
+- [x] Create custom exceptions
+    - [x] InvalidUnitException
+    - [x] InvalidValueException
+    - [x] NegativeValueException
+- [x] Implement main FileSize class
+    - [x] Constructor and static factories
+    - [x] Magic __get for property access
+    - [x] Precision and ByteBase fluent setters
+- [x] Create HandlesConversions trait
+    - [x] toBytes(), toKilobytes(), toMegabytes(), etc.
+- [x] Create HandlesArithmetic trait
+    - [x] add(), sub(), multiply(), divide()
+    - [x] Convenience methods (addKilobytes, subMegabytes, etc.)
+    - [x] abs() method
+- [x] Create HandlesComparisons trait
+    - [x] equals(), notEquals()
+    - [x] greaterThan(), greaterThanOrEqual()
+    - [x] lessThan(), lessThanOrEqual()
+    - [x] between(), min(), max()
+    - [x] isZero(), isPositive(), isNegative()
+- [x] Create HandlesFormatting trait
+    - [x] forHumans() with short option
+    - [x] format() and formatShort() aliases
+    - [x] bestUnit() helper (implemented as `guessUnit()`)
+
+**Phase 2 Summary:**
+Core development is complete with all components implemented and passing quality checks:
+- `ByteBase` enum with Binary (1024) and Decimal (1000) modes, default is Binary
+- `Unit` enum with all units from Byte to PetaByte, with proper label methods for both bases
+- Three custom exceptions: `InvalidUnitException`, `InvalidValueException`, `NegativeValueException`
+- `FileSize` class with private constructor and static factory methods for all units
+- `FileSizeConfiguration` class using Laravel's `#[Config]` attributes for dependency injection
+- All four traits implemented: Conversions, Arithmetic, Comparisons, Formatting
+
+Key fixes applied:
+- Added missing return types to `getBinaryLabel()` and `getDecimalLabel()` methods
+- Fixed static call to instance method in `__get` (`Unit::fromBytes` → `$unit->fromBytes`)
+- Rector applied constructor property promotion and narrowed return types
 
 ### Phase 3: Laravel Integration
 
-- [ ] Create configuration file (config/file-size.php)
-- [ ] Create FileSizeServiceProvider using Spatie package tools
-- [ ] Create FileSize Facade with proper docblocks
-- [ ] Test service provider auto-discovery
+- [x] Create configuration file (config/file-size.php)
+- [x] Create FileSizeServiceProvider using Spatie package tools
+- [x] Create FileSize Facade with proper docblocks
+- [x] Test service provider auto-discovery
+
+**Phase 3 Summary:**
+Laravel integration is complete:
+- `config/file-size.php` with all configuration options (byte_base, precision, formatting, validation)
+- `FileSizeServiceProvider` using Spatie's `laravel-package-tools` for clean setup
+- `FileSizeConfiguration` class using Laravel 12's `#[Config]` attributes for dependency injection
+- Facade provided for IDE autocompletion (note: use the class directly since it uses static factory methods)
+- Feature tests added for configuration loading and service provider registration
+
+Note: The `FileSize` class uses static factory methods with a private constructor, so it should be used directly (`FileSize::megabytes(5)`) rather than through dependency injection. The Facade is provided for IDE support and documentation.
 
 ### Phase 4: Testing (Pest)
 

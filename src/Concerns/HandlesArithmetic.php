@@ -21,7 +21,7 @@ trait HandlesArithmetic
     {
         $bytes = $this->bytes - $unit->toBytes($value, $this->byteBase);
 
-        if ($bytes < 0 && app(FileSizeConfiguration::class)->validationThrowOnNegativeResultconfig) {
+        if ($bytes < 0 && app(FileSizeConfiguration::class)->validationThrowOnNegativeResult) {
             throw new NegativeValueException('Subtraction resulted in negative value.');
         }
 

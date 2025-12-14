@@ -21,15 +21,13 @@ class FileSize
 
     private float $bytes;
     private ByteBase $byteBase;
-    private ?int $precision = null;
 
-    private function __construct(float $bytes, ?ByteBase $byteBase = null, ?int $precision = null)
+    private function __construct(float $bytes, ?ByteBase $byteBase = null, private ?int $precision = null)
     {
         $this->validateValue($bytes);
 
         $this->bytes = $bytes;
         $this->byteBase = $byteBase ?? app(FileSizeConfiguration::class)->byteBase();
-        $this->precision = $precision;
     }
 
     public static function bytes(int|float $value, ?ByteBase $byteBase = null): self
@@ -115,7 +113,7 @@ class FileSize
     public function __get(string $property): float|int
     {
         $unit = $this->propertyToUnit($property);
-        $value = Unit::fromBytes($this->bytes, $this->byteBase);
+        $value = $unit->fromBytes($this->bytes, $this->byteBase);
 
         if ($this->precision !== null) {
             return round($value, $this->precision);

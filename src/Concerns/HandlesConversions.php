@@ -37,7 +37,7 @@ trait HandlesConversions
         return $this->convertTo(Unit::PetaByte, $precision);
     }
 
-    private function convertTo(Unit $unit, ?int $precision = null): float|int
+    private function convertTo(Unit $unit, ?int $precision = null): float
     {
         $value = $unit->fromBytes($this->bytes, $this->byteBase);
         $precision ??= $this->precision ?? app(FileSizeConfiguration::class)->precision;

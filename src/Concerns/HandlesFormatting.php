@@ -20,7 +20,7 @@ trait HandlesFormatting
             round($value, $precision),
             $precision,
             $configuration->decimalSeparator,
-            $configuration->thousandsSeparator
+            $configuration->thousandsSeparator,
         );
 
         return str($formattedValue)

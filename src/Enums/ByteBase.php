@@ -11,7 +11,7 @@ enum ByteBase: string
 
     public static function default(): self
     {
-        return self::Decimal;
+        return self::Binary;
     }
 
     public static function fromConfig(): self

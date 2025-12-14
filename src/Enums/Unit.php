@@ -13,17 +13,17 @@ enum Unit: int
     case TeraByte = 4;
     case PetaByte = 5;
 
-    public function toBytes(float $value, ByteBase $base = null): float
+    public function toBytes(float $value, ?ByteBase $base = null): float
     {
         return $value * $this->getByteBase($base)->multiply($this->value);
     }
 
-    public function fromBytes(float $bytes, ByteBase $base = null): float
+    public function fromBytes(float $bytes, ?ByteBase $base = null): float
     {
         return $bytes / $this->getByteBase($base)->multiply($this->value);
     }
 
-    public function label(ByteBase $base = null, bool $short = false): string
+    public function label(?ByteBase $base = null, bool $short = false): string
     {
         if ($this->getByteBase($base) === ByteBase::Binary) {
             return $this->getBinaryLabel($short);
@@ -32,11 +32,11 @@ enum Unit: int
         return $this->getDecimalLabel($short);
     }
 
-    public function getBinaryLabel(bool $short = false)
+    public function getBinaryLabel(bool $short = false): string
     {
         if ($short) {
             return match ($this) {
-                self::Byte => 'B',
+                self::Byte     => 'B',
                 self::KiloByte => 'KiB',
                 self::MegaByte => 'MiB',
                 self::GigaByte => 'GiB',
@@ -46,7 +46,7 @@ enum Unit: int
         }
 
         return match ($this) {
-            self::Byte => 'Bytes',
+            self::Byte     => 'Bytes',
             self::KiloByte => 'Kibibytes',
             self::MegaByte => 'Mebibytes',
             self::GigaByte => 'Gibibytes',
@@ -55,11 +55,11 @@ enum Unit: int
         };
     }
 
-    public function getDecimalLabel(bool $short = false)
+    public function getDecimalLabel(bool $short = false): string
     {
         if ($short) {
             return match ($this) {
-                self::Byte => 'B',
+                self::Byte     => 'B',
                 self::KiloByte => 'KB',
                 self::MegaByte => 'MB',
                 self::GigaByte => 'GB',
@@ -69,7 +69,7 @@ enum Unit: int
         }
 
         return match ($this) {
-            self::Byte => 'Bytes',
+            self::Byte     => 'Bytes',
             self::KiloByte => 'Kilobytes',
             self::MegaByte => 'Megabytes',
             self::GigaByte => 'Gigabytes',

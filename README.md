@@ -1,4 +1,4 @@
-# Laravel FileSize
+# Laravel File Size
 
 A fluent, immutable API for converting, comparing, and formatting file sizes in Laravel with support for both binary (1024-based) and decimal (1000-based) byte systems.
 

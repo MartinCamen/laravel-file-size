@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use MartinCamen\FileSize\Enums\ByteBase;
 use MartinCamen\FileSize\Enums\Unit;
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\Facades\FileSize;
 
 describe('equals', function (): void {
     it('returns true when values are equal', function (): void {

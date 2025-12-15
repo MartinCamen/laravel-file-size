@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\Facades\FileSize;
+use MartinCamen\FileSize\FileSize as FileSizeClass;
 
-/**
- * Note: The FileSize class uses static factory methods with a private constructor.
- * This means you should use the class directly rather than through a Laravel Facade.
- * The Facade is provided for IDE autocompletion and documentation purposes.
- */
-it('can be used directly via static factory methods', function (): void {
+it('can be used via the Facade', function (): void {
     $size = FileSize::megabytes(5);
 
-    expect($size)->toBeInstanceOf(FileSize::class);
+    expect($size)->toBeInstanceOf(FileSizeClass::class);
     expect($size->toMegabytes())->toBe(5.0);
+});
+
+it('facade resolves from container correctly', function (): void {
+    $instance = app('file-size');
+
+    expect($instance)->toBeInstanceOf(FileSizeClass::class);
 });
 
 it('service provider is registered correctly', function (): void {
@@ -24,4 +26,12 @@ it('service provider is registered correctly', function (): void {
 it('config file is published', function (): void {
     expect(config('file-size'))->toBeArray();
     expect(config('file-size.precision'))->toBe(2);
+});
+
+it('can chain methods via Facade', function (): void {
+    $result = FileSize::megabytes(2)
+        ->addMegabytes(3)
+        ->toMegabytes();
+
+    expect($result)->toBe(5.0);
 });

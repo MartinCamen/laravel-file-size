@@ -13,7 +13,7 @@ return [
     | Decimal: 1 KB = 1000 bytes (KB, MB, GB)
     |
     */
-    'byte_base'         => env('FILE_INFO_BYTE_BASE', MartinCamen\FileSize\Enums\ByteBase::default()->value),
+    'byte_base'  => env('FILE_INFO_BYTE_BASE', MartinCamen\FileSize\Enums\ByteBase::default()->value),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ return [
     | Can be overridden per operation.
     |
     */
-    'precision' => 2,
+    'precision'  => 2,
 
     /*
     |--------------------------------------------------------------------------
@@ -34,8 +34,23 @@ return [
     | Configuration for human-readable output
     |
     */
-    'formatting'        => [
-        'use_binary_notation'          => false, // KiB vs KB
+    'formatting' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Label Style
+        |--------------------------------------------------------------------------
+        |
+        | Controls which naming convention to use for unit labels, independent of
+        | the byte base used for calculations.
+        |
+        | Options:
+        |   - null (default): Labels follow the byte_base setting
+        |   - 'binary': Always use IEC labels (Kibibytes, Mebibytes, KiB, MiB)
+        |   - 'decimal': Always use SI labels (Kilobytes, Megabytes, KB, MB)
+        |
+        */
+        'label_style'                  => null,
+
         'decimal_separator'            => '.',
         'thousands_separator'          => ',',
         'space_between_value_and_unit' => true,
@@ -49,7 +64,7 @@ return [
     | Configure validation behavior
     |
     */
-    'validation'        => [
+    'validation' => [
         'allow_negative_input'     => false,
         'throw_on_negative_result' => false, // After subtraction
     ],

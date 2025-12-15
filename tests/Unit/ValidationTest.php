@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use MartinCamen\FileSize\Exceptions\InvalidValueException;
 use MartinCamen\FileSize\Exceptions\NegativeValueException;
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\Facades\FileSize;
 
 describe('negative input validation', function (): void {
     it('throws on negative input by default', function (): void {

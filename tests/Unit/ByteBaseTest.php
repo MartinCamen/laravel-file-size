@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use MartinCamen\FileSize\Enums\ByteBase;
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\Facades\FileSize;
 
 describe('ByteBase enum', function (): void {
     it('has binary multiplier of 1024', function (): void {

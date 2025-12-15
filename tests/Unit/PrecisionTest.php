@@ -3,7 +3,8 @@
 declare(strict_types=1);
 
 use MartinCamen\FileSize\Enums\ByteBase;
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\Enums\Unit;
+use MartinCamen\FileSize\Facades\FileSize;
 
 describe('precision handling', function (): void {
     it('uses default precision from config', function (): void {
@@ -60,11 +61,11 @@ describe('precision handling', function (): void {
         $size = FileSize::kilobytes(1, ByteBase::Binary); // 1024 bytes
 
         // Exact match
-        expect($size->equals(1024, MartinCamen\FileSize\Enums\Unit::Byte, precision: 0))->toBeTrue();
+        expect($size->equals(1024, Unit::Byte, precision: 0))->toBeTrue();
 
         // With precision, values are rounded before comparison
         $sizeWithDecimals = FileSize::bytes(1536, ByteBase::Binary); // 1.5 KB
-        expect($sizeWithDecimals->equals(1.5, MartinCamen\FileSize\Enums\Unit::KiloByte, precision: 2))->toBeTrue();
+        expect($sizeWithDecimals->equals(1.5, Unit::KiloByte, precision: 2))->toBeTrue();
     });
 });
 

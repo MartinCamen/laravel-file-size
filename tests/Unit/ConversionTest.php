@@ -1,7 +1,7 @@
 <?php
 
 use MartinCamen\FileSize\Enums\ByteBase;
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\Facades\FileSize;
 
 it('converts megabytes to kilobytes with binary base as default', function (): void {
     expect(FileSize::megabytes(2)->toKilobytes())

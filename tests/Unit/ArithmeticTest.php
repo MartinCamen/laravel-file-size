@@ -6,7 +6,7 @@ use MartinCamen\FileSize\Enums\ByteBase;
 use MartinCamen\FileSize\Enums\Unit;
 use MartinCamen\FileSize\Exceptions\InvalidValueException;
 use MartinCamen\FileSize\Exceptions\NegativeValueException;
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\Facades\FileSize;
 
 describe('add operations', function (): void {
     it('adds bytes to file size', function (): void {

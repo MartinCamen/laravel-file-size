@@ -19,94 +19,108 @@ class FileSize
     use HandlesConversions;
     use HandlesFormatting;
 
-    private float $bytes;
+    private float $bytes = 0;
     private ByteBase $byteBase;
 
-    private function __construct(float $bytes, ?ByteBase $byteBase = null, private ?int $precision = null)
+    public function __construct(?float $bytes = null, ?ByteBase $byteBase = null, private ?int $precision = null)
     {
-        $this->validateValue($bytes);
+        if ($bytes !== null) {
+            $this->validateValue($bytes);
+            $this->bytes = $bytes;
+        }
 
-        $this->bytes = $bytes;
         $this->byteBase = $byteBase ?? app(FileSizeConfiguration::class)->byteBase();
     }
 
-    public static function bytes(int|float $value, ?ByteBase $byteBase = null): self
+    public function bytes(int|float $value, ?ByteBase $byteBase = null): self
     {
+        $base = $byteBase ?? $this->byteBase;
+
         return new self(
-            Unit::Byte->toBytes($value, $byteBase),
-            $byteBase,
+            Unit::Byte->toBytes($value, $base),
+            $base,
         );
     }
 
-    public static function kilobytes(int|float $value, ?ByteBase $byteBase = null): self
+    public function kilobytes(int|float $value, ?ByteBase $byteBase = null): self
     {
+        $base = $byteBase ?? $this->byteBase;
+
         return new self(
-            Unit::KiloByte->toBytes($value, $byteBase),
-            $byteBase,
+            Unit::KiloByte->toBytes($value, $base),
+            $base,
         );
     }
 
-    public static function megabytes(int|float $value, ?ByteBase $byteBase = null): self
+    public function megabytes(int|float $value, ?ByteBase $byteBase = null): self
     {
+        $base = $byteBase ?? $this->byteBase;
+
         return new self(
-            Unit::MegaByte->toBytes($value, $byteBase),
-            $byteBase,
+            Unit::MegaByte->toBytes($value, $base),
+            $base,
         );
     }
 
-    public static function gigabytes(int|float $value, ?ByteBase $byteBase = null): self
+    public function gigabytes(int|float $value, ?ByteBase $byteBase = null): self
     {
+        $base = $byteBase ?? $this->byteBase;
+
         return new self(
-            Unit::GigaByte->toBytes($value, $byteBase),
-            $byteBase,
+            Unit::GigaByte->toBytes($value, $base),
+            $base,
         );
     }
 
-    public static function terabytes(int|float $value, ?ByteBase $byteBase = null): self
+    public function terabytes(int|float $value, ?ByteBase $byteBase = null): self
     {
+        $base = $byteBase ?? $this->byteBase;
+
         return new self(
-            Unit::TeraByte->toBytes($value, $byteBase),
-            $byteBase,
+            Unit::TeraByte->toBytes($value, $base),
+            $base,
         );
     }
 
-    public static function petabytes(int|float $value, ?ByteBase $byteBase = null): self
+    public function petabytes(int|float $value, ?ByteBase $byteBase = null): self
     {
+        $base = $byteBase ?? $this->byteBase;
+
         return new self(
-            Unit::PetaByte->toBytes($value, $byteBase),
-            $byteBase,
+            Unit::PetaByte->toBytes($value, $base),
+            $base,
         );
     }
 
     // Singular forms (default to 1)
-    public static function byte(?ByteBase $byteBase = null): self
+    public function byte(?ByteBase $byteBase = null): self
     {
-        return self::bytes(1, $byteBase);
+        return $this->bytes(1, $byteBase);
     }
 
-    public static function kilobyte(?ByteBase $byteBase = null): self
+    public function kilobyte(?ByteBase $byteBase = null): self
     {
-        return self::kilobytes(1, $byteBase);
+        return $this->kilobytes(1, $byteBase);
     }
 
-    public static function megabyte(?ByteBase $byteBase = null): self
+    public function megabyte(?ByteBase $byteBase = null): self
     {
-        return self::megabytes(1, $byteBase);
+        return $this->megabytes(1, $byteBase);
     }
 
-    public static function gigabyte(?ByteBase $byteBase = null): self
+    public function gigabyte(?ByteBase $byteBase = null): self
     {
-        return self::gigabytes(1, $byteBase);
+        return $this->gigabytes(1, $byteBase);
     }
 
-    public static function terabyte(?ByteBase $byteBase = null): self
+    public function terabyte(?ByteBase $byteBase = null): self
     {
-        return self::terabytes(1, $byteBase);
+        return $this->terabytes(1, $byteBase);
     }
 
-    public static function petabyte(?ByteBase $byteBase = null): self
+    public function petabyte(?ByteBase $byteBase = null): self
     {
-        return self::petabytes(1, $byteBase);
+        return $this->petabytes(1, $byteBase);
     }
 
     // Getters via magic method
@@ -168,7 +182,6 @@ class FileSize
         };
     }
 
-    // Accessors for internal state
     public function getBytes(): float
     {
         return $this->bytes;

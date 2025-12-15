@@ -48,7 +48,13 @@
         "format": "vendor/bin/pint",
         "analyse": "vendor/bin/phpstan analyse",
         "rector": "vendor/bin/rector process --dry-run",
-        "rector-fix": "vendor/bin/rector process"
+        "rector-fix": "vendor/bin/rector process",
+        "run-through": [
+          "composer test",
+          "composer format",
+          "composer analyse",
+          "composer rector"
+        ]
     },
     "config": {
         "sort-packages": true,

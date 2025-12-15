@@ -12,6 +12,8 @@ class FileSizeConfiguration
         public ?string $byteBase,
         #[Config('file-size.precision', 2)]
         public int $precision,
+        #[Config('file-size.formatting.label_style')]
+        public ?string $labelStyle,
         #[Config('file-size.formatting.decimal_separator', '.')]
         public string $decimalSeparator,
         #[Config('file-size.formatting.thousands_separator', ',')]
@@ -27,7 +29,18 @@ class FileSizeConfiguration
     public function byteBase(): ByteBase
     {
         return $this->byteBase
-            ? ByteBase::from($this->byteBase)
+            ? (ByteBase::tryFrom($this->byteBase) ?? ByteBase::default())
             : ByteBase::default();
+    }
+
+    public function labelByteBase(?ByteBase $calculationBase = null): ByteBase
+    {
+        if ($this->labelStyle
+            && ($byteBaseConfigurationLabelStyle = ByteBase::tryFrom($this->labelStyle))
+        ) {
+            return $byteBaseConfigurationLabelStyle;
+        }
+
+        return $calculationBase ?? $this->byteBase();
     }
 }

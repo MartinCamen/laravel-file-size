@@ -3,12 +3,16 @@
 namespace MartinCamen\FileSize\Concerns;
 
 use MartinCamen\FileSize\Configuration\FileSizeConfiguration;
+use MartinCamen\FileSize\Enums\ByteBase;
 use MartinCamen\FileSize\Enums\Unit;
 
 trait HandlesFormatting
 {
-    public function forHumans(bool $short = false, ?int $precision = null): string
-    {
+    public function forHumans(
+        bool $short = false,
+        ?int $precision = null,
+        ?ByteBase $labelStyle = null,
+    ): string {
         $configuration = app(FileSizeConfiguration::class);
 
         $precision ??= $this->precision ?? $configuration->precision;
@@ -23,20 +27,22 @@ trait HandlesFormatting
             $configuration->thousandsSeparator,
         );
 
+        $labelBase = $configuration->labelByteBase($labelStyle ?? $this->byteBase);
+
         return str($formattedValue)
             ->append($configuration->spaceBetweenValueAndUnit ? ' ' : '')
-            ->append($unit->label($this->byteBase, $short))
+            ->append($unit->label($labelBase, $short))
             ->value();
     }
 
-    public function format(?int $precision = null): string
+    public function format(?int $precision = null, ?ByteBase $labelStyle = null): string
     {
-        return $this->forHumans(false, $precision);
+        return $this->forHumans(false, $precision, $labelStyle);
     }
 
-    public function formatShort(?int $precision = null): string
+    public function formatShort(?int $precision = null, ?ByteBase $labelStyle = null): string
     {
-        return $this->forHumans(true, $precision);
+        return $this->forHumans(true, $precision, $labelStyle);
     }
 
     private function guessUnit(): Unit

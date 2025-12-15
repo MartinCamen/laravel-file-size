@@ -2,21 +2,14 @@
 
 namespace MartinCamen\FileSize\Enums;
 
-use MartinCamen\FileSize\Configuration\FileSizeConfiguration;
-
 enum ByteBase: string
 {
-    case Binary = 'binary';  // IEC standard (KiB, MiB, GiB)
-    case Decimal = 'decimal'; // SI standard (KB, MB, GB)
+    case Binary = 'binary';  // IEC standard
+    case Decimal = 'decimal'; // SI standard
 
     public static function default(): self
     {
         return self::Binary;
-    }
-
-    public static function fromConfig(): self
-    {
-        return app(FileSizeConfiguration::class)->byteBase();
     }
 
     public function multiplier(): float

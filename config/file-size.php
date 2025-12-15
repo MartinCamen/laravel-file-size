@@ -44,12 +44,12 @@ return [
         | the byte base used for calculations.
         |
         | Options:
-        |   - null (default): Labels follow the byte_base setting
-        |   - 'binary': Always use IEC labels (Kibibytes, Mebibytes, KiB, MiB)
         |   - 'decimal': Always use SI labels (Kilobytes, Megabytes, KB, MB)
+        |   - 'binary': Always use IEC labels (Kibibytes, Mebibytes, KiB, MiB)
+        |   - null (default): Labels follow the byte_base setting
         |
         */
-        'label_style'                  => null,
+        'label_style'                  => MartinCamen\FileSize\Enums\ByteBase::Decimal->value,
 
         'decimal_separator'            => '.',
         'thousands_separator'          => ',',

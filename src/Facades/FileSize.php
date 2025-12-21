@@ -24,6 +24,6 @@ class FileSize extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'file-size';
+        return \MartinCamen\FileSize\FileSize::class;
     }
 }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use MartinCamen\FileSize\Facades\FileSize;
-use MartinCamen\FileSize\FileSize as FileSizeClass;
+use MartinCamen\PhpFileSize\FileSize as FileSizeClass;
 
 it('can be used via the Facade', function (): void {
     $size = FileSize::megabytes(5);

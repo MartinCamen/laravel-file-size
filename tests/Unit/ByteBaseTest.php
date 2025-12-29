@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-use MartinCamen\FileSize\Enums\ByteBase;
 use MartinCamen\FileSize\Facades\FileSize;
+use MartinCamen\PhpFileSize\Enums\ByteBase;
+use MartinCamen\PhpFileSize\Enums\ConfigurationOption;
 
 describe('ByteBase enum', function (): void {
     it('has binary multiplier of 1024', function (): void {
@@ -29,28 +30,29 @@ describe('ByteBase enum', function (): void {
 
 describe('ByteBase switching', function (): void {
     it('converts correctly with binary base', function (): void {
-        $size = FileSize::megabytes(1, ByteBase::Binary);
+        $size = FileSize::megabytes(1, [ConfigurationOption::ByteBase->value => ByteBase::Binary]);
 
         expect($size->toKilobytes())->toBe(1024.0);
         expect($size->toBytes())->toBe(1048576.0);
     });
 
     it('converts correctly with decimal base', function (): void {
-        $size = FileSize::megabytes(1, ByteBase::Decimal);
+        $size = FileSize::megabytes(1, [ConfigurationOption::ByteBase->value => ByteBase::Decimal]);
 
         expect($size->toKilobytes())->toBe(1000.0);
         expect($size->toBytes())->toBe(1000000.0);
     });
 
     it('can change byte base fluently', function (): void {
-        $size = FileSize::megabytes(1, ByteBase::Binary)
+        $size = FileSize::megabytes(1)
+            ->inBinaryFormat()
             ->byteBase(ByteBase::Decimal);
 
         expect($size->getByteBase())->toBe(ByteBase::Decimal);
     });
 
     it('preserves original when changing byte base', function (): void {
-        $original = FileSize::megabytes(1, ByteBase::Binary);
+        $original = FileSize::megabytes(1);
         $changed = $original->byteBase(ByteBase::Decimal);
 
         expect($original->getByteBase())->toBe(ByteBase::Binary);
@@ -67,15 +69,22 @@ describe('ByteBase switching', function (): void {
 });
 
 describe('labels with different byte bases', function (): void {
-    it('uses binary labels for binary base', function (): void {
-        $size = FileSize::megabytes(1, ByteBase::Binary);
+    it('default uses decimal labels for binary base', function (): void {
+        $size = FileSize::inBinaryFormat()->megabytes(1);
+
+        expect($size->forHumans())->toContain('Megabytes');
+        expect($size->formatShort())->toContain('MB');
+    });
+
+    it('can use binary labels for binary base', function (): void {
+        $size = FileSize::inBinaryFormat()->withBinaryLabel()->megabytes(1);
 
         expect($size->forHumans())->toContain('Mebibytes');
         expect($size->formatShort())->toContain('MiB');
     });
 
-    it('uses decimal labels for decimal base', function (): void {
-        $size = FileSize::megabytes(1, ByteBase::Decimal);
+    it('can use decimal labels with decimal base', function (): void {
+        $size = FileSize::inDecimalFormat()->megabytes(1);
 
         expect($size->forHumans())->toContain('Megabytes');
         expect($size->formatShort())->toContain('MB');

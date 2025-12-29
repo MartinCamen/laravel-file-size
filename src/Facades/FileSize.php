@@ -5,25 +5,23 @@ namespace MartinCamen\FileSize\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \MartinCamen\FileSize\FileSize bytes(int|float $value, ?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize kilobytes(int|float $value, ?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize megabytes(int|float $value, ?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize gigabytes(int|float $value, ?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize terabytes(int|float $value, ?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize petabytes(int|float $value, ?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize byte(?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize kilobyte(?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize megabyte(?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize gigabyte(?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize terabyte(?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- * @method static \MartinCamen\FileSize\FileSize petabyte(?\MartinCamen\FileSize\Enums\ByteBase $byteBase = null)
- *
- * @see \MartinCamen\FileSize\FileSize
+ * @method static \MartinCamen\PhpFileSize\FileSize bytes(int|float $value, array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize kilobytes(int|float $value, array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize megabytes(int|float $value, array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize gigabytes(int|float $value, array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize terabytes(int|float $value, array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize petabytes(int|float $value, array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize byte(array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize kilobyte(array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize megabyte(array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize gigabyte(array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize terabyte(array $options = [])
+ * @method static \MartinCamen\PhpFileSize\FileSize petabyte(array $options = [])
  */
 class FileSize extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \MartinCamen\FileSize\FileSize::class;
+        return \MartinCamen\PhpFileSize\FileSize::class;
     }
 }

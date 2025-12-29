@@ -2,39 +2,38 @@
 
 declare(strict_types=1);
 
-use MartinCamen\FileSize\Enums\ByteBase;
-use MartinCamen\FileSize\Enums\Unit;
 use MartinCamen\FileSize\Facades\FileSize;
+use MartinCamen\PhpFileSize\Enums\Unit;
 
 describe('equals', function (): void {
     it('returns true when values are equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->equals(2048, Unit::KiloByte))->toBeTrue();
     });
 
     it('returns false when values are not equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->equals(1000, Unit::KiloByte))->toBeFalse();
     });
 
     it('compares with precision', function (): void {
-        $size = FileSize::bytes(1024, ByteBase::Binary);
+        $size = FileSize::bytes(1024);
 
-        expect($size->equals(1, Unit::KiloByte, precision: 0))->toBeTrue();
+        expect($size->precision(0)->equals(1, Unit::KiloByte))->toBeTrue();
     });
 });
 
 describe('notEquals', function (): void {
     it('returns true when values are not equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->notEquals(1000, Unit::KiloByte))->toBeTrue();
     });
 
     it('returns false when values are equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->notEquals(2048, Unit::KiloByte))->toBeFalse();
     });
@@ -42,19 +41,19 @@ describe('notEquals', function (): void {
 
 describe('greaterThan', function (): void {
     it('returns true when size is greater', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->greaterThan(1, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns false when size is equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->greaterThan(2, Unit::MegaByte))->toBeFalse();
     });
 
     it('returns false when size is less', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->greaterThan(3, Unit::MegaByte))->toBeFalse();
     });
@@ -62,19 +61,19 @@ describe('greaterThan', function (): void {
 
 describe('greaterThanOrEqual', function (): void {
     it('returns true when size is greater', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->greaterThanOrEqual(1, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns true when size is equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->greaterThanOrEqual(2, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns false when size is less', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->greaterThanOrEqual(3, Unit::MegaByte))->toBeFalse();
     });
@@ -82,19 +81,19 @@ describe('greaterThanOrEqual', function (): void {
 
 describe('lessThan', function (): void {
     it('returns true when size is less', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->lessThan(3, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns false when size is equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->lessThan(2, Unit::MegaByte))->toBeFalse();
     });
 
     it('returns false when size is greater', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->lessThan(1, Unit::MegaByte))->toBeFalse();
     });
@@ -102,19 +101,19 @@ describe('lessThan', function (): void {
 
 describe('lessThanOrEqual', function (): void {
     it('returns true when size is less', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->lessThanOrEqual(3, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns true when size is equal', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->lessThanOrEqual(2, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns false when size is greater', function (): void {
-        $size = FileSize::megabytes(2, ByteBase::Binary);
+        $size = FileSize::megabytes(2);
 
         expect($size->lessThanOrEqual(1, Unit::MegaByte))->toBeFalse();
     });
@@ -122,31 +121,31 @@ describe('lessThanOrEqual', function (): void {
 
 describe('between', function (): void {
     it('returns true when value is within range', function (): void {
-        $size = FileSize::megabytes(5, ByteBase::Binary);
+        $size = FileSize::megabytes(5);
 
         expect($size->between(1, 10, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns true when value equals lower bound', function (): void {
-        $size = FileSize::megabytes(1, ByteBase::Binary);
+        $size = FileSize::megabytes(1);
 
         expect($size->between(1, 10, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns true when value equals upper bound', function (): void {
-        $size = FileSize::megabytes(10, ByteBase::Binary);
+        $size = FileSize::megabytes(10);
 
         expect($size->between(1, 10, Unit::MegaByte))->toBeTrue();
     });
 
     it('returns false when value is below range', function (): void {
-        $size = FileSize::megabytes(0, ByteBase::Binary);
+        $size = FileSize::megabytes(0);
 
         expect($size->between(1, 10, Unit::MegaByte))->toBeFalse();
     });
 
     it('returns false when value is above range', function (): void {
-        $size = FileSize::megabytes(11, ByteBase::Binary);
+        $size = FileSize::megabytes(11);
 
         expect($size->between(1, 10, Unit::MegaByte))->toBeFalse();
     });
@@ -154,24 +153,24 @@ describe('between', function (): void {
 
 describe('min and max', function (): void {
     it('returns the smaller size with min', function (): void {
-        $size1 = FileSize::megabytes(5, ByteBase::Binary);
-        $size2 = FileSize::megabytes(10, ByteBase::Binary);
+        $size1 = FileSize::megabytes(5);
+        $size2 = FileSize::megabytes(10);
 
         expect($size1->min($size2))->toBe($size1);
         expect($size2->min($size1))->toBe($size1);
     });
 
     it('returns the larger size with max', function (): void {
-        $size1 = FileSize::megabytes(5, ByteBase::Binary);
-        $size2 = FileSize::megabytes(10, ByteBase::Binary);
+        $size1 = FileSize::megabytes(5);
+        $size2 = FileSize::megabytes(10);
 
         expect($size1->max($size2))->toBe($size2);
         expect($size2->max($size1))->toBe($size2);
     });
 
     it('returns self when sizes are equal', function (): void {
-        $size1 = FileSize::megabytes(5, ByteBase::Binary);
-        $size2 = FileSize::megabytes(5, ByteBase::Binary);
+        $size1 = FileSize::megabytes(5);
+        $size2 = FileSize::megabytes(5);
 
         expect($size1->min($size2))->toBe($size1);
         expect($size1->max($size2))->toBe($size1);
@@ -206,7 +205,7 @@ describe('state checks', function (): void {
     it('isNegative returns true for negative size', function (): void {
         config(['file-size.validation.allow_negative_input' => true]);
 
-        $size = FileSize::megabytes(1, ByteBase::Binary)->subMegabytes(2);
+        $size = FileSize::megabytes(1)->subMegabytes(2);
 
         expect($size->isNegative())->toBeTrue();
     });

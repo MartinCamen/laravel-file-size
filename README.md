@@ -24,11 +24,11 @@ php artisan vendor:publish --tag="file-size-config"
 ## Quick Start
 
 ```php
-use MartinCamen\FileSize\FileSize;
+use MartinCamen\FileSize\FileSizerino;
 use MartinCamen\FileSize\Enums\ByteBase;
 
 // Create a file size
-$size = FileSize::megabytes(5);
+$size = FileSizerino::megabytes(5);
 
 // Convert between units
 $size->toKilobytes();    // 5120.0 (binary)

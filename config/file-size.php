@@ -13,7 +13,7 @@ return [
     | Decimal: 1 KB = 1000 bytes (KB, MB, GB)
     |
     */
-    'byte_base'  => env('FILE_INFO_BYTE_BASE', MartinCamen\FileSize\Enums\ByteBase::default()->value),
+    'byte_base'  => env('FILE_INFO_BYTE_BASE', MartinCamen\PhpFileSize\Enums\ByteBase::default()->value),
 
     /*
     |--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ return [
         |   - null (default): Labels follow the byte_base setting
         |
         */
-        'label_style'                  => MartinCamen\FileSize\Enums\ByteBase::Decimal->value,
+        'label_style'                  => MartinCamen\PhpFileSize\Enums\ByteBase::Decimal->value,
 
         'decimal_separator'            => '.',
         'thousands_separator'          => ',',

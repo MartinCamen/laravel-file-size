@@ -56,10 +56,10 @@ composer require martincamen/laravel-file-size
 ## Quick Example
 
 ```php
-use MartinCamen\FileSize\FileSizerino;
+use MartinCamen\FileSize\FileSize;
 
 // Create a file size
-$size = FileSizerino::megabytes(5);
+$size = FileSize::megabytes(5);
 
 // Convert
 $size->toKilobytes();  // 5120.0

@@ -52,6 +52,17 @@ it('chains arithmetic operations with decimal base', function (): void {
     expect($result)->toBe(1986.0);
 });
 
+it('chains arithmetic operations with base change', function (): void {
+    $result = FileSize::inDecimalFormat()
+        ->megabytes(2)
+        ->subKilobytes(22)
+        ->addKilobytes(8)
+        ->inBinaryFormat()
+        ->toKilobytes();
+
+    expect($result)->toBe(2034.0);
+});
+
 it('formats for humans with binary base as default', function (): void {
     expect(FileSize::megabytes(1.5)->withBinaryLabel()->forHumans())
         ->toBe('1.50 Mebibytes');
@@ -60,6 +71,11 @@ it('formats for humans with binary base as default', function (): void {
 it('formats for humans with binary base', function (): void {
     expect(FileSize::megabytes(1.5)->withBinaryLabel()->forHumans())
         ->toBe('1.50 Mebibytes');
+});
+
+it('formats for humans with decimal label', function (): void {
+    expect(FileSize::megabytes(1.5)->withDecimalLabel()->forHumans())
+        ->toBe('1.50 Megabytes');
 });
 
 it('formats for humans with decimal base', function (): void {

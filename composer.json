@@ -1,78 +1,79 @@
 {
-    "name": "martincamen/laravel-file-size",
-    "description": "Eloquent file size calculations and formatting for Laravel",
-    "keywords": [
-        "laravel",
-        "file-size",
-        "formatting",
-        "bytes",
-        "storage"
-    ],
-    "homepage": "https://github.com/martincamen/laravel-file-size",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Martin Camen",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": "^8.3",
-        "illuminate/support": "^12.0",
-        "martincamen/php-file-size": "^1.0",
-        "spatie/laravel-package-tools": "^1.16"
-    },
-    "require-dev": {
-        "driftingly/rector-laravel": "^2.1",
-        "larastan/larastan": "^3.0",
-        "laravel/pint": "^1.17",
-        "orchestra/testbench": "^10.0",
-        "pestphp/pest": "^3.0",
-        "pestphp/pest-plugin-laravel": "^3.0",
-        "phpstan/phpstan": "^2.0",
-        "rector/rector": "^2.0",
-        "roave/security-advisories": "dev-latest"
-    },
-    "autoload": {
-        "psr-4": {
-            "MartinCamen\\FileSize\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "MartinCamen\\FileSize\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "test": "vendor/bin/pest",
-        "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint",
-        "analyse": "vendor/bin/phpstan analyse",
-        "rector": "vendor/bin/rector process --dry-run",
-        "rector-fix": "vendor/bin/rector process",
-        "run-through": [
-          "composer test",
-          "composer format",
-          "composer analyse",
-          "composer rector"
-        ]
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "pestphp/pest-plugin": true
-        }
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "MartinCamen\\FileSize\\FileSizeServiceProvider"
-            ],
-            "aliases": {
-                "FileSize": "MartinCamen\\FileSize\\Facades\\FileSize"
-            }
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+  "name": "martincamen/laravel-file-size",
+  "description": "Eloquent file size calculations and formatting for Laravel",
+  "keywords": [
+    "laravel",
+    "file-size",
+    "formatting",
+    "bytes",
+    "storage"
+  ],
+  "homepage": "https://github.com/martincamen/laravel-file-size",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Martin Camen",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.3",
+    "illuminate/support": "^12.0",
+    "martincamen/php-file-size": "^1.0",
+    "spatie/laravel-package-tools": "^1.16"
+  },
+  "require-dev": {
+    "driftingly/rector-laravel": "^2.1",
+    "larastan/larastan": "^3.0",
+    "laravel/pint": "^1.17",
+    "orchestra/testbench": "^10.0",
+    "pestphp/pest": "^3.0",
+    "pestphp/pest-plugin-laravel": "^3.0",
+    "phpstan/phpstan": "^2.0",
+    "rector/rector": "^2.0",
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "MartinCamen\\FileSize\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MartinCamen\\FileSize\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan analyse",
+    "pint": "vendor/bin/pint --test",
+    "pint-fix": "vendor/bin/pint",
+    "rector": "vendor/bin/rector process --dry-run",
+    "rector-fix": "vendor/bin/rector process",
+    "test": "vendor/bin/pest",
+    "test-coverage": "vendor/bin/pest --coverage",
+    "check": [
+      "@analyse",
+      "@test",
+      "@pint",
+      "@rector"
+    ]
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "MartinCamen\\FileSize\\FileSizeServiceProvider"
+      ],
+      "aliases": {
+        "FileSize": "MartinCamen\\FileSize\\Facades\\FileSize"
+      }
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

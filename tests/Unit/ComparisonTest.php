@@ -156,24 +156,30 @@ describe('min and max', function (): void {
         $size1 = FileSize::megabytes(5);
         $size2 = FileSize::megabytes(10);
 
-        expect($size1->min($size2))->toBe($size1);
-        expect($size2->min($size1))->toBe($size1);
+        expect($size1->min($size2))
+            ->toBe($size1)
+            ->and($size2->min($size1))
+            ->toBe($size1);
     });
 
     it('returns the larger size with max', function (): void {
         $size1 = FileSize::megabytes(5);
         $size2 = FileSize::megabytes(10);
 
-        expect($size1->max($size2))->toBe($size2);
-        expect($size2->max($size1))->toBe($size2);
+        expect($size1->max($size2))
+            ->toBe($size2)
+            ->and($size2->max($size1))
+            ->toBe($size2);
     });
 
     it('returns self when sizes are equal', function (): void {
         $size1 = FileSize::megabytes(5);
         $size2 = FileSize::megabytes(5);
 
-        expect($size1->min($size2))->toBe($size1);
-        expect($size1->max($size2))->toBe($size1);
+        expect($size1->min($size2))
+            ->toBe($size1)
+            ->and($size1->max($size2))
+            ->toBe($size1);
     });
 });
 

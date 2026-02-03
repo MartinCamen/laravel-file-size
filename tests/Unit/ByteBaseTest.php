@@ -32,15 +32,19 @@ describe('ByteBase switching', function (): void {
     it('converts correctly with binary base', function (): void {
         $size = FileSize::megabytes(1, [ConfigurationOption::ByteBase->value => ByteBase::Binary]);
 
-        expect($size->toKilobytes())->toBe(1024.0);
-        expect($size->toBytes())->toBe(1048576.0);
+        expect($size->toKilobytes())
+            ->toBe(1024.0)
+            ->and($size->toBytes())
+            ->toBe(1048576.0);
     });
 
     it('converts correctly with decimal base', function (): void {
         $size = FileSize::megabytes(1, [ConfigurationOption::ByteBase->value => ByteBase::Decimal]);
 
-        expect($size->toKilobytes())->toBe(1000.0);
-        expect($size->toBytes())->toBe(1000000.0);
+        expect($size->toKilobytes())
+            ->toBe(1000.0)
+            ->and($size->toBytes())
+            ->toBe(1000000.0);
     });
 
     it('can change byte base fluently', function (): void {
@@ -55,8 +59,10 @@ describe('ByteBase switching', function (): void {
         $original = FileSize::megabytes(1);
         $changed = $original->byteBase(ByteBase::Decimal);
 
-        expect($original->getByteBase())->toBe(ByteBase::Binary);
-        expect($changed->getByteBase())->toBe(ByteBase::Decimal);
+        expect($original->getByteBase())
+            ->toBe(ByteBase::Binary)
+            ->and($changed->getByteBase())
+            ->toBe(ByteBase::Decimal);
     });
 
     it('uses configuration byte base when not specified', function (): void {
@@ -72,21 +78,27 @@ describe('labels with different byte bases', function (): void {
     it('default uses decimal labels for binary base', function (): void {
         $size = FileSize::inBinaryFormat()->megabytes(1);
 
-        expect($size->forHumans())->toContain('Megabytes');
-        expect($size->formatShort())->toContain('MB');
+        expect($size->forHumans())
+            ->toContain('Megabytes')
+            ->and($size->formatShort())
+            ->toContain('MB');
     });
 
     it('can use binary labels for binary base', function (): void {
         $size = FileSize::inBinaryFormat()->withBinaryLabel()->megabytes(1);
 
-        expect($size->forHumans())->toContain('Mebibytes');
-        expect($size->formatShort())->toContain('MiB');
+        expect($size->forHumans())
+            ->toContain('Mebibytes')
+            ->and($size->formatShort())
+            ->toContain('MiB');
     });
 
     it('can use decimal labels with decimal base', function (): void {
         $size = FileSize::inDecimalFormat()->megabytes(1);
 
-        expect($size->forHumans())->toContain('Megabytes');
-        expect($size->formatShort())->toContain('MB');
+        expect($size->forHumans())
+            ->toContain('Megabytes')
+            ->and($size->formatShort())
+            ->toContain('MB');
     });
 });

@@ -56,19 +56,37 @@ describe('forHumans', function (): void {
     });
 
     it('uses decimal labels when implicitly defined', function (): void {
-        expect(FileSize::inDecimalFormat()->megabytes(1.5)->forHumans())->toBe('1.50 Megabytes');
+        expect(
+            FileSize::inDecimalFormat()
+                ->megabytes(1.5)
+                ->forHumans(),
+        )->toBe('1.50 Megabytes');
     });
 
     it('uses short decimal labels  when implicitly defined', function (): void {
-        expect(FileSize::inDecimalFormat()->megabytes(1.5)->forHumans(short: true))->toBe('1.50 MB');
+        expect(
+            FileSize::inDecimalFormat()
+                ->megabytes(1.5)
+                ->forHumans(short: true),
+        )->toBe('1.50 MB');
     });
 
     it('uses binary labels for binary base when implicitly defined', function (): void {
-        expect(FileSize::inBinaryFormat()->megabytes(1.5)->withBinaryLabel()->forHumans())->toBe('1.50 Mebibytes');
+        expect(
+            FileSize::inBinaryFormat()
+                ->megabytes(1.5)
+                ->withBinaryLabel()
+                ->forHumans(),
+        )->toBe('1.50 Mebibytes');
     });
 
     it('uses short binary labels when implicitly defined', function (): void {
-        expect(FileSize::inBinaryFormat()->megabytes(1.5)->withBinaryLabel()->forHumans(short: true))->toBe('1.50 MiB');
+        expect(
+            FileSize::inBinaryFormat()
+                ->megabytes(1.5)
+                ->withBinaryLabel()
+                ->forHumans(short: true),
+        )->toBe('1.50 MiB');
     });
 
     it('accepts binary label byte base for binary byte base', function (): void {
@@ -219,8 +237,10 @@ describe('label style configuration', function (): void {
         $binarySize = FileSize::megabytes(1.5);
         $decimalSize = FileSize::megabytes(1.5)->inDecimalFormat();
 
-        expect($binarySize->forHumans())->toBe('1.50 Mebibytes');
-        expect($decimalSize->forHumans())->toBe('1.50 Megabytes');
+        expect($binarySize->forHumans())
+            ->toBe('1.50 Mebibytes')
+            ->and($decimalSize->forHumans())
+            ->toBe('1.50 Megabytes');
     });
 
     it('uses decimal labels with binary calculations when label_style is decimal', function (): void {
@@ -229,10 +249,13 @@ describe('label style configuration', function (): void {
         // Binary calculations (1024-based) but with decimal labels
         $size = FileSize::megabytes(1.5);
 
-        expect($size->forHumans())->toBe('1.50 Megabytes');
-        expect($size->forHumans(short: true))->toBe('1.50 MB');
+        expect($size->forHumans())
+            ->toBe('1.50 Megabytes')
+            ->and($size->forHumans(short: true))
+            ->toBe('1.50 MB')
+            ->and($size->toBytes())
+            ->toBe(1572864.0);
         // Verify calculation is still binary (1.5 MB = 1.5 * 1024 * 1024 bytes)
-        expect($size->toBytes())->toBe(1572864.0);
     });
 
     it('uses binary labels with decimal calculations when label_style is binary', function (): void {
@@ -241,10 +264,13 @@ describe('label style configuration', function (): void {
         // Decimal calculations (1000-based) but with binary labels
         $size = FileSize::megabytes(1.5)->inDecimalFormat();
 
-        expect($size->forHumans())->toBe('1.50 Mebibytes');
-        expect($size->forHumans(short: true))->toBe('1.50 MiB');
+        expect($size->forHumans())
+            ->toBe('1.50 Mebibytes')
+            ->and($size->forHumans(short: true))
+            ->toBe('1.50 MiB')
+            ->and($size->toBytes())
+            ->toBe(1500000.0);
         // Verify calculation is still decimal (1.5 MB = 1.5 * 1000 * 1000 bytes)
-        expect($size->toBytes())->toBe(1500000.0);
     });
 
     it('applies label_style to short format', function (): void {
@@ -258,11 +284,17 @@ describe('label style configuration', function (): void {
     it('applies label_style across all unit sizes', function (): void {
         config(['file-size.formatting.label_style' => 'decimal']);
 
-        expect(FileSize::bytes(512)->forHumans())->toBe('512.00 Bytes');
-        expect(FileSize::kilobytes(1.5)->forHumans())->toBe('1.50 Kilobytes');
-        expect(FileSize::megabytes(1.5)->forHumans())->toBe('1.50 Megabytes');
-        expect(FileSize::gigabytes(1.5)->forHumans())->toBe('1.50 Gigabytes');
-        expect(FileSize::terabytes(1.5)->forHumans())->toBe('1.50 Terabytes');
-        expect(FileSize::petabytes(1.5)->forHumans())->toBe('1.50 Petabytes');
+        expect(FileSize::bytes(512)->forHumans())
+            ->toBe('512.00 Bytes')
+            ->and(FileSize::kilobytes(1.5)->forHumans())
+            ->toBe('1.50 Kilobytes')
+            ->and(FileSize::megabytes(1.5)->forHumans())
+            ->toBe('1.50 Megabytes')
+            ->and(FileSize::gigabytes(1.5)->forHumans())
+            ->toBe('1.50 Gigabytes')
+            ->and(FileSize::terabytes(1.5)->forHumans())
+            ->toBe('1.50 Terabytes')
+            ->and(FileSize::petabytes(1.5)->forHumans())
+            ->toBe('1.50 Petabytes');
     });
 });

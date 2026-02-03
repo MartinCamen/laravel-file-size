@@ -127,8 +127,10 @@ describe('multiply operations', function (): void {
     it('multiplies by zero results in zero', function (): void {
         $size = FileSize::megabytes(100)->multiply(0);
 
-        expect($size->toMegabytes())->toBe(0.0);
-        expect($size->isZero())->toBeTrue();
+        expect($size->toMegabytes())
+            ->toBe(0.0)
+            ->and($size->isZero())
+            ->toBeTrue();
     });
 });
 
@@ -164,8 +166,10 @@ describe('abs operation', function (): void {
             ->subMegabytes(6)
             ->abs();
 
-        expect($size->toMegabytes())->toBe(5.0);
-        expect($size->isPositive())->toBeTrue();
+        expect($size->toMegabytes())
+            ->toBe(5.0)
+            ->and($size->isPositive())
+            ->toBeTrue();
     });
 });
 

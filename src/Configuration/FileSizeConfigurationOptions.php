@@ -7,7 +7,7 @@ use MartinCamen\PhpFileSize\Configuration\FileSizeOptions;
 /** @phpstan-import-type OptionalFileSizeOptionsType from FileSizeOptions */
 class FileSizeConfigurationOptions
 {
-    /** @param OptionalFileSizeOptionsType $options */
+    /** @param OptionalFileSizeOptionsType $data */
     public static function make(array $data = []): FileSizeOptions
     {
         return new FileSizeOptions(

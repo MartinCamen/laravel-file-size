@@ -9,7 +9,10 @@ use MartinCamen\PhpFileSize\Configuration\FileSizeOptions;
 use MartinCamen\PhpFileSize\FileSize;
 use SplFileInfo;
 
-/** @phpstan-import-type OptionalFileSizeOptionsType from FileSizeOptions */
+/**
+ * @phpstan-import-type OptionalFileSizeOptionsType from FileSizeOptions
+ * @phpstan-import-type RequiredFileSizeOptionsType from FileSizeOptions
+ */
 class FileSizeService
 {
     /** @param OptionalFileSizeOptionsType $options */
@@ -99,7 +102,10 @@ class FileSizeService
         return is_array($last);
     }
 
-    /** @param array<int, mixed> $arguments */
+    /**
+     * @param array<int, mixed> $arguments
+     * @return OptionalFileSizeOptionsType
+     */
     private function getOptionsArgument(array $arguments): array
     {
         $last = end($arguments);
@@ -107,7 +113,10 @@ class FileSizeService
         return is_array($last) ? $last : [];
     }
 
-    /** @param OptionalFileSizeOptionsType $options */
+    /**
+     * @param OptionalFileSizeOptionsType $options
+     * @return RequiredFileSizeOptionsType
+     */
     private static function mergeOptions(array $options = []): array
     {
         return FileSizeConfigurationOptions::make($options)->toArray();
